@@ -1,0 +1,8 @@
+{
+  "name": "Remix VitalPrep",
+  "description": "Comprehensive daily wellness and APPSC Group 1 academic dashboard tracking 1-hour daily exercise, morning and evening focus study sessions, customizable reminders, steady sleep, and mindful eating habits.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "entities": {
+    "UserSettings": {
+      "title": "UserSettings",
+      "description": "User wellness and APPSC Group 1 academic daily targets",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Authenticated Firebase Auth UID" },
+        "displayName": { "type": "string", "description": "User display name" },
+        "targetExerciseMinutes": { "type": "integer", "description": "Daily exercise target in minutes (default 60)" },
+        "targetMorningStudyMinutes": { "type": "integer", "description": "Morning APPSC Group 1 focus target in minutes (default 60)" },
+        "targetEveningStudyMinutes": { "type": "integer", "description": "Evening APPSC Group 1 focus target in minutes (default 60)" },
+        "targetSleepHours": { "type": "number", "description": "Target steady nightly sleep duration in hours (default 7.5)" },
+        "targetBedtimeMinutes": { "type": "integer", "description": "Target bedtime in minutes from midnight" },
+        "targetWakeTimeMinutes": { "type": "integer", "description": "Target wake-up time in minutes from midnight" },
+        "targetWaterGlasses": { "type": "integer", "description": "Daily mindful hydration target in glasses" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp on creation (FieldValue.serverTimestamp())" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp on update (FieldValue.serverTimestamp())" }
+      },
+      "required": [
+        "userId",
+        "displayName",
+        "targetExerciseMinutes",
+        "targetMorningStudyMinutes",
+        "targetEveningStudyMinutes",
+        "targetSleepHours",
+        "targetBedtimeMinutes",
+        "targetWakeTimeMinutes",
+        "targetWaterGlasses",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "DailyLog": {
+      "title": "DailyLog",
+      "description": "Aggregated daily wellness, exercise, APPSC Group 1 study, sleep, and mindful eating record keyed by yyyy-MM-dd",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Authenticated Firebase Auth UID" },
+        "dateKey": { "type": "string", "description": "ISO local date key yyyy-MM-dd" },
+        "exerciseMinutes": { "type": "integer", "description": "Completed daily exercise minutes" },
+        "morningStudyMinutes": { "type": "integer", "description": "Completed morning APPSC Group 1 study minutes" },
+        "eveningStudyMinutes": { "type": "integer", "description": "Completed evening APPSC Group 1 study minutes" },
+        "sleepHours": { "type": "number", "description": "Logged sleep duration in hours" },
+        "bedtimeMinutes": { "type": "integer", "description": "Logged bedtime in minutes from midnight" },
+        "wakeTimeMinutes": { "type": "integer", "description": "Logged wake time in minutes from midnight" },
+        "sleepQuality": { "type": "integer", "description": "Sleep quality score 0..5" },
+        "screenFreeWindDown": { "type": "boolean", "description": "Whether user completed screen-free wind-down before sleep" },
+        "waterGlasses": { "type": "integer", "description": "Glasses of water consumed" },
+        "mindfulMealsCount": { "type": "integer", "description": "Number of mindful meals logged" },
+        "totalMealsCount": { "type": "integer", "description": "Total meals logged" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp on creation" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp on update" }
+      },
+      "required": [
+        "userId",
+        "dateKey",
+        "exerciseMinutes",
+        "morningStudyMinutes",
+        "eveningStudyMinutes",
+        "sleepHours",
+        "bedtimeMinutes",
+        "wakeTimeMinutes",
+        "sleepQuality",
+        "screenFreeWindDown",
+        "waterGlasses",
+        "mindfulMealsCount",
+        "totalMealsCount",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "FocusSession": {
+      "title": "FocusSession",
+      "description": "Individual logged exercise or APPSC Group 1 morning/evening study session",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Authenticated Firebase Auth UID" },
+        "dateKey": { "type": "string", "description": "ISO local date key yyyy-MM-dd" },
+        "category": { "type": "string", "enum": ["EXERCISE", "MORNING_APPSC", "EVENING_APPSC"], "description": "Session pillar category" },
+        "topic": { "type": "string", "description": "Study topic or workout focus" },
+        "paperTag": { "type": "string", "description": "APPSC Group 1 paper or workout modality tag" },
+        "durationMinutes": { "type": "integer", "description": "Session duration in minutes" },
+        "notes": { "type": "string", "description": "Optional session reflection or key takeaways" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp on creation" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp on update" }
+      },
+      "required": [
+        "userId",
+        "dateKey",
+        "category",
+        "topic",
+        "paperTag",
+        "durationMinutes",
+        "notes",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "MealEntry": {
+      "title": "MealEntry",
+      "description": "Mindful eating habit entry with awareness checkpoints",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Authenticated Firebase Auth UID" },
+        "dateKey": { "type": "string", "description": "ISO local date key yyyy-MM-dd" },
+        "mealType": { "type": "string", "enum": ["BREAKFAST", "LUNCH", "DINNER", "SNACK"], "description": "Meal slot" },
+        "description": { "type": "string", "description": "What the user ate" },
+        "distractionFree": { "type": "boolean", "description": "Eaten without screens or study multitasking" },
+        "slowPace": { "type": "boolean", "description": "Chewed slowly and mindfully" },
+        "satisfiedStop": { "type": "boolean", "description": "Stopped eating at comfortable satiety" },
+        "nutritionQuality": { "type": "string", "enum": ["BALANCED", "LIGHT", "INDULGENT"], "description": "Nutritional balance self-rating" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp on creation" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp on update" }
+      },
+      "required": [
+        "userId",
+        "dateKey",
+        "mealType",
+        "description",
+        "distractionFree",
+        "slowPace",
+        "satisfiedStop",
+        "nutritionQuality",
+        "createdAt",
+        "updatedAt"
+      ]
+    },
+    "DailyReminder": {
+      "title": "DailyReminder",
+      "description": "Customizable daily morning, evening, and wellness productivity reminder",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "Authenticated Firebase Auth UID" },
+        "title": { "type": "string", "description": "Reminder title" },
+        "message": { "type": "string", "description": "Custom motivational or action message" },
+        "category": { "type": "string", "enum": ["EXERCISE", "MORNING_APPSC", "EVENING_APPSC", "SLEEP", "MINDFUL_EATING"], "description": "Associated routine pillar" },
+        "hour": { "type": "integer", "description": "Hour of day 0..23" },
+        "minute": { "type": "integer", "description": "Minute of hour 0..59" },
+        "enabled": { "type": "boolean", "description": "Whether the reminder is active" },
+        "daysOfWeek": { "type": "array", "description": "Active ISO weekdays 1..7" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Server timestamp on creation" },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Server timestamp on update" }
+      },
+      "required": [
+        "userId",
+        "title",
+        "message",
+        "category",
+        "hour",
+        "minute",
+        "enabled",
+        "daysOfWeek",
+        "createdAt",
+        "updatedAt"
+      ]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": { "$ref": "#/entities/UserSettings" },
+      "description": "Per-user wellness and APPSC Group 1 academic target settings"
+    },
+    "/users/{userId}/dailyLogs/{dateKey}": {
+      "schema": { "$ref": "#/entities/DailyLog" },
+      "description": "Daily wellness and study summary documents keyed by yyyy-MM-dd"
+    },
+    "/users/{userId}/sessions/{sessionId}": {
+      "schema": { "$ref": "#/entities/FocusSession" },
+      "description": "Individual exercise and APPSC Group 1 focus study sessions"
+    },
+    "/users/{userId}/meals/{mealId}": {
+      "schema": { "$ref": "#/entities/MealEntry" },
+      "description": "Mindful eating entries per user"
+    },
+    "/users/{userId}/reminders/{reminderId}": {
+      "schema": { "$ref": "#/entities/DailyReminder" },
+      "description": "Customizable daily morning and evening productivity reminders"
+    }
+  }
+}
